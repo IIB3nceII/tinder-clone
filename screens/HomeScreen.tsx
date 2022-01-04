@@ -7,14 +7,17 @@ import { RootStackParams } from "../StackNavigator";
 type HomeScreenProps = NativeStackNavigationProp<RootStackParams, "Chat">;
 
 const HomeScreen: FC = () => {
-  const navigation = useNavigation<HomeScreenProps>();
+    const navigation = useNavigation<HomeScreenProps>();
 
-  return (
-    <View>
-      <Text>Home</Text>
-      <Button title="Go to chat" onPress={() => navigation.navigate("Chat")} />
-    </View>
-  );
+    return (
+        <View>
+            <Text>Home</Text>
+            <Button
+                title="Go to chat"
+                onPress={() => navigation.navigate("Chat")}
+            />
+        </View>
+    );
 };
 
 export default HomeScreen;
