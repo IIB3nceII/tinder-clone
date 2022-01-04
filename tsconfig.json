@@ -2,5 +2,13 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true
+  },
+  "baseUrl": ".",
+  "paths": {
+    "@screens/*": ["screens/*"],
+    "@common": ["framework/common"],
+    "@common/*": ["framework/common/*"],
+    "@components/*": ["components/*"],
+    "@assets/*": ["assets/*"]
   }
 }
