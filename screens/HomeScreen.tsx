@@ -1,12 +1,20 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { FC } from "react";
+import { View, Text, Button } from "react-native";
+import { RootStackParams } from "../StackNavigator";
 
-const HomeScreen = () => {
-    return (
-        <View>
-            <Text>Home</Text>
-        </View>
-    )
-}
+type HomeScreenProps = NativeStackNavigationProp<RootStackParams, "Chat">;
 
-export default HomeScreen
+const HomeScreen: FC = () => {
+  const navigation = useNavigation<HomeScreenProps>();
+
+  return (
+    <View>
+      <Text>Home</Text>
+      <Button title="Go to chat" onPress={() => navigation.navigate("Chat")} />
+    </View>
+  );
+};
+
+export default HomeScreen;
