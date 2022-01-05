@@ -16,18 +16,21 @@ interface IStackNavigatorProps extends StateProps {}
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 
-const StackNavigator: FC<IStackNavigatorProps>= (props) => {
-  const {user} = props;
+const StackNavigator: FC<IStackNavigatorProps> = (props) => {
+  const { user } = props;
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Chat" component={ChatScreen} />
         </>
       ) : (
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+        />
       )}
     </Stack.Navigator>
   );
