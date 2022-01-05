@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { FC } from "react";
+import { connect } from "react-redux";
 import ChatScreen from "./screens/ChatScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
+import { IRootState } from "./shared/reducers";
 
 export type RootStackParams = {
   Home: undefined;
@@ -10,10 +12,12 @@ export type RootStackParams = {
   Login: undefined;
 };
 
+interface IStackNavigatorProps extends StateProps {}
+
 const Stack = createNativeStackNavigator<RootStackParams>();
 
-const StackNavigator = () => {
-  const user = false;
+const StackNavigator: FC<IStackNavigatorProps>= (props) => {
+  const {user} = props;
 
   return (
     <Stack.Navigator>
@@ -29,4 +33,11 @@ const StackNavigator = () => {
   );
 };
 
-export default StackNavigator;
+const mapStateToProps = ({ authentication }: IRootState) => ({
+  user: authentication.account.name,
+  state: authentication,
+});
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+
+export default connect(mapStateToProps)(StackNavigator);

@@ -1,7 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { View, Text, Button } from "react-native";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { IRootState } from "../shared/reducers";
+import { signInWithGoogle } from "../shared/reducers/authentication";
 import * as Google from "expo-google-app-auth";
 import googleConfig from "../google.config";
 import {
@@ -12,43 +13,26 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../firebase.config";
+import { IUser } from "../model/user.model";
 
 interface ILoginScreenProps extends StateProps, DispatchProps {}
 
 const LoginScreen: FC<ILoginScreenProps> = (props) => {
-  const { user } = props;
-
-  const signInWithGoogle = async () => {
-    Google.logInAsync(googleConfig)
-      .then(async (result) => {
-        if (result.type === "success") {
-          const { idToken, accessToken } = result;
-          const credential = GoogleAuthProvider.credential(
-            idToken,
-            accessToken
-          );
-          await signInWithCredential(auth, credential);
-          console.log('login succes')
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+  const { signInWithGoogle } = props;
 
   return (
     <View>
-      <Text>{user}</Text>
       <Button title="Login" onPress={signInWithGoogle} />
     </View>
   );
 };
 
 const mapStateToProps = ({ authentication }: IRootState) => ({
-  user: authentication.account.name,
+  account: authentication.account,
+  state: authentication,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { signInWithGoogle };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
